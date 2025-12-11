@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3: カラフルな花火</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        background-color: #001;
+        color: white;
+        font-family: sans-serif;
+      }
+      canvas {
+        border: 2px solid #333;
+        display: block;
+        margin: 20px auto;
+        background-color: #000;
+      }
+      .info {
+        text-align: center;
+        margin: 20px;
+      }
+      h1 {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <script>
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+       // キャンバスサイズを画面全体に
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+      // 花火で使う色の配列
+      const colors = [
+        "#ff6b6b", // 赤
+        "#4ecdc4", // シアン
+        "#ffe66d", // 黄色
+        "#ff00ff", // マゼンタ
+        "#00ff00", // 緑
+        "#ff8c00", // オレンジ
+        "#00bfff", // 青
+      ];
+
+      // 花火の設定
+      let radius = 0;
+      const maxRadius = 150;
+      const centerX = 400;
+      const centerY = 300;
+      let currentColor = colors[0]; // 現在の色
+
+      // 花火を描く関数
+      function drawFirework() {
+        // 画面をクリア
+        ctx.fillStyle = "rgba(0, 0, 17, 0.1)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const particleCount = 30;
+
+        // 30本の線を描く
+        for (let i = 0; i < particleCount; i++) {
+          const angle = ((Math.PI * 2) / particleCount) * i;
+          const endX = centerX + Math.cos(angle) * radius;
+          const endY = centerY + Math.sin(angle) * radius;
+
+          ctx.beginPath();
+          ctx.moveTo(centerX, centerY);
+          ctx.lineTo(endX, endY);
+          ctx.strokeStyle = currentColor; // 色を使う
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        }
+      }
+
+      // アニメーションを動かす関数
+      function animate() {
+        drawFirework();
+
+        // 半径を大きくする
+        radius += 2;
+
+        // 最大まで広がったらリセット
+        if (radius > maxRadius) {
+          radius = 0;
+          // ランダムに新しい色を選ぶ
+          const randomIndex = Math.floor(Math.random() * colors.length);
+          currentColor = colors[randomIndex];
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      // アニメーション開始
+      animate();
+    </script>
+  </body>
+</html>
