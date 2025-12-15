@@ -32,11 +32,11 @@
     <canvas id="canvas"></canvas>
 
     <script>
-      const canvas = document.getElementById("canvas");
-      const ctx = canvas.getContext("2d");
+      const canvas = document.getElementById("canvas")
+      const ctx = canvas.getContext("2d")
       // キャンバスサイズを画面全体に
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
 
       const colors = [
         "#ff6b6b",
@@ -46,93 +46,93 @@
         "#00ff00",
         "#ff8c00",
         "#00bfff",
-      ];
+      ]
 
       // 花火のリスト（複数の花火を管理）
-      let fireworks = [];
+      let fireworks = []
 
       // 花火のクラス（設計図）
       class Firework {
         constructor(x, y) {
-          this.x = x;
-          this.y = y;
-          this.radius = 0;
-          this.maxRadius = 150;
-          this.color = colors[Math.floor(Math.random() * colors.length)];
-          this.alpha = 1; // 透明度（1=不透明、0=透明）
-          this.finished = false; // 終わったかどうか
+          this.x = x
+          this.y = y
+          this.radius = 0
+          this.maxRadius = 150
+          this.color = colors[Math.floor(Math.random() * colors.length)]
+          this.alpha = 1 // 透明度（1=不透明、0=透明）
+          this.finished = false // 終わったかどうか
         }
 
         // 花火を更新する
         update() {
-          this.radius += 3;
+          this.radius += 3
 
           // 半分まで広がったら透明にし始める
           if (this.radius > this.maxRadius / 2) {
-            this.alpha -= 0.02;
+            this.alpha -= 0.02
           }
 
           // 透明になったら終了
           if (this.alpha <= 0) {
-            this.finished = true;
+            this.finished = true
           }
         }
 
         // 花火を描く
         draw() {
-          const particleCount = 30;
+          const particleCount = 30
 
           for (let i = 0; i < particleCount; i++) {
-            const angle = ((Math.PI * 2) / particleCount) * i;
-            const endX = this.x + Math.cos(angle) * this.radius;
-            const endY = this.y + Math.sin(angle) * this.radius;
+            const angle = ((Math.PI * 2) / particleCount) * i
+            const endX = this.x + Math.cos(angle) * this.radius
+            const endY = this.y + Math.sin(angle) * this.radius
 
-            ctx.beginPath();
-            ctx.moveTo(this.x, this.y);
-            ctx.lineTo(endX, endY);
-            ctx.strokeStyle = this.color;
-            ctx.globalAlpha = this.alpha; // 透明度を設定
-            ctx.lineWidth = 2;
-            ctx.stroke();
+            ctx.beginPath()
+            ctx.moveTo(this.x, this.y)
+            ctx.lineTo(endX, endY)
+            ctx.strokeStyle = this.color
+            ctx.globalAlpha = this.alpha // 透明度を設定
+            ctx.lineWidth = 2
+            ctx.stroke()
           }
 
-          ctx.globalAlpha = 1; // 透明度をリセット
+          ctx.globalAlpha = 1 // 透明度をリセット
         }
       }
 
       // クリックしたときの処理
       canvas.addEventListener("click", (event) => {
         // クリックした位置を取得
-        const rect = canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+        const rect = canvas.getBoundingClientRect()
+        const x = event.clientX - rect.left
+        const y = event.clientY - rect.top
 
         // 新しい花火を追加
-        fireworks.push(new Firework(x, y));
-      });
+        fireworks.push(new Firework(x, y))
+      })
 
       // アニメーション
       function animate() {
         // 画面をクリア
-        ctx.fillStyle = "rgba(0, 0, 17, 0.2)";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(0, 0, 17, 0.2)"
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
 
         // すべての花火を更新して描く
         for (let i = fireworks.length - 1; i >= 0; i--) {
-          fireworks[i].update();
-          fireworks[i].draw();
+          fireworks[i].update()
+          fireworks[i].draw()
 
           // 終わった花火を削除
           if (fireworks[i].finished) {
-            fireworks.splice(i, 1);
+            fireworks.splice(i, 1)
           }
         }
 
-        requestAnimationFrame(animate);
+        requestAnimationFrame(animate)
       }
 
       // アニメーション開始
-      animate();
+      animate()
     </script>
   </body>
 </html>
