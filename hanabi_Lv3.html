@@ -38,37 +38,34 @@
   <script>
     const canvas = document.getElementById("canvas")
     const ctx = canvas.getContext("2d")
-    // キャンバスサイズを画面全体に
+
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
 
-    // 花火で使う色の配列
+    // あたらしい色を探すとき
+    // https://www.lab-nemoto.jp/www/leaflet_edu/else/ColorMaker.html
     const colors = [
-      "#ff6b6b", // 赤
-      "#4ecdc4", // シアン
-      "#ffe66d", // 黄色
+      "red", // 赤
+      "yellow", // 黄色
+      "green", // 緑
+      "orange", // オレンジ
+      "blue", // 青
       "#ff00ff", // マゼンタ
-      "#00ff00", // 緑
-      "#ff8c00", // オレンジ
-      "#00bfff", // 青
+      "#4ecdc4", // シアン
     ]
 
-    // 花火の設定
     let radius = 0
     const maxRadius = 150
     let centerX = 400
     let centerY = 300
-    let currentColor = colors[0] // 現在の色
+    let currentColor = colors[0]
 
-    // 花火を描く関数
     function drawFirework() {
-      // 画面をクリア
       ctx.fillStyle = "rgba(0, 0, 17, 0.1)"
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       const particleCount = 30
 
-      // 30本の線を描く
       for (let i = 0; i < particleCount; i++) {
         const angle = ((Math.PI * 2) / particleCount) * i
         const endX = centerX + Math.cos(angle) * radius
@@ -77,32 +74,26 @@
         ctx.beginPath()
         ctx.moveTo(centerX, centerY)
         ctx.lineTo(endX, endY)
-        ctx.strokeStyle = currentColor // 色を使う
+        ctx.strokeStyle = currentColor
         ctx.lineWidth = 2
         ctx.stroke()
       }
     }
 
-    // アニメーションを動かす関数
     function animate() {
       drawFirework()
 
-      // 半径を大きくする
       radius += 2
 
-      // 最大まで広がったらリセット
       if (radius > maxRadius) {
         radius = 0
 
-        // ランダムに新しい色を選ぶ
         const randomIndex = Math.floor(Math.random() * colors.length)
         currentColor = colors[randomIndex]
       }
 
       requestAnimationFrame(animate)
     }
-
-    // アニメーション開始
     animate()
   </script>
 </body>

@@ -53,10 +53,8 @@
       "#00bfff",
     ]
 
-    // 花火のリスト（複数の花火を管理）
     let fireworks = []
 
-    // 花火のクラス（設計図）
     class Firework {
       constructor(x, y) {
         this.x = x
@@ -64,26 +62,22 @@
         this.radius = 0
         this.maxRadius = 150
         this.color = colors[Math.floor(Math.random() * colors.length)]
-        this.alpha = 1 // 透明度（1=不透明、0=透明）
-        this.finished = false // 終わったかどうか
+        this.alpha = 1
+        this.finished = false
       }
 
-      // 花火を更新する
       update() {
         this.radius += 3
 
-        // 半分まで広がったら透明にし始める
         if (this.radius > this.maxRadius / 2) {
           this.alpha -= 0.02
         }
 
-        // 透明になったら終了
         if (this.alpha <= 0) {
           this.finished = true
         }
       }
 
-      // 花火を描く
       draw() {
         const particleCount = 30
 
@@ -96,38 +90,31 @@
           ctx.moveTo(this.x, this.y)
           ctx.lineTo(endX, endY)
           ctx.strokeStyle = this.color
-          ctx.globalAlpha = this.alpha // 透明度を設定
+          ctx.globalAlpha = this.alpha
           ctx.lineWidth = 2
           ctx.stroke()
         }
 
-        ctx.globalAlpha = 1 // 透明度をリセット
+        ctx.globalAlpha = 1
       }
     }
 
-    // クリックしたときの処理
     canvas.addEventListener("click", (event) => {
-      // クリックした位置を取得
       const rect = canvas.getBoundingClientRect()
       const x = event.clientX - rect.left
       const y = event.clientY - rect.top
 
-      // 新しい花火を追加
       fireworks.push(new Firework(x, y))
     })
 
-    // アニメーション
     function animate() {
-      // 画面をクリア
       ctx.fillStyle = "rgba(0, 0, 17, 0.2)"
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-      // すべての花火を更新して描く
       for (let i = fireworks.length - 1; i >= 0; i--) {
         fireworks[i].update()
         fireworks[i].draw()
 
-        // 終わった花火を削除
         if (fireworks[i].finished) {
           fireworks.splice(i, 1)
         }
@@ -135,8 +122,6 @@
 
       requestAnimationFrame(animate)
     }
-
-    // アニメーション開始
     animate()
   </script>
 </body>
