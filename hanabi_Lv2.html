@@ -38,42 +38,34 @@
   <script>
     const canvas = document.getElementById("canvas")
     const ctx = canvas.getContext("2d")
-    
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
 
     let radius = 0
-    const maxRadius = 150
-    const centerX = 400
-    const centerY = 300 
 
-    function drawFirework() {
+    function animate() {
       ctx.fillStyle = "rgba(0, 0, 17, 0.1)"
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-      const particleCount = 30
-
-      for (let i = 0; i < particleCount; i++) {
-        const angle = ((Math.PI * 2) / particleCount) * i
-
-        const endX = centerX + Math.cos(angle) * radius
-        const endY = centerY + Math.sin(angle) * radius
+      for (let i = 0; i < 30; i++) {
+        const angle = ((Math.PI * 2) / 30) * i
 
         ctx.beginPath()
-        ctx.moveTo(centerX, centerY)
-        ctx.lineTo(endX, endY)
+        ctx.moveTo(
+          400,
+          300
+        )
+        ctx.lineTo(
+          400 + Math.cos(angle) * radius,
+          300 + Math.sin(angle) * radius)
         ctx.strokeStyle = "#ff6b6b"
         ctx.lineWidth = 2
         ctx.stroke()
       }
-    }
-
-    function animate() {
-      drawFirework()
 
       radius += 2
 
-      if (radius > maxRadius) {
+      if (radius > 150) {
         radius = 0
       }
 

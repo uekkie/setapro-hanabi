@@ -38,29 +38,21 @@
   <script>
     const canvas = document.getElementById("canvas")
     const ctx = canvas.getContext("2d")
-
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
 
-    function drawFirework(x, y) {
-      const particleCount = 30
-      const radius = 100
+    for (let i = 0; i < 30; i++) {
+      const angle = ((Math.PI * 2) / 30) * i
 
-      for (let i = 0; i < particleCount; i++) {
-        const angle = ((Math.PI * 2) / particleCount) * i
-
-        const endX = x + Math.cos(angle) * radius
-        const endY = y + Math.sin(angle) * radius
-
-        ctx.beginPath()
-        ctx.moveTo(x, y)
-        ctx.lineTo(endX, endY)
-        ctx.strokeStyle = "yellow"
-        ctx.lineWidth = 2
-        ctx.stroke()
-      }
+      ctx.beginPath()
+      ctx.moveTo(400, 300)
+      ctx.lineTo(
+        400 + Math.cos(angle) * 100,
+        300 + Math.sin(angle) * 100)
+      ctx.strokeStyle = "yellow"
+      ctx.lineWidth = 2
+      ctx.stroke()
     }
-    drawFirework(400, 300)
   </script>
 </body>
 
