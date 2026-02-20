@@ -79,22 +79,22 @@
       }
 
       draw() {
-        const particleCount = 30
-
-        for (let i = 0; i < particleCount; i++) {
-          const angle = ((Math.PI * 2) / particleCount) * i
-          const endX = this.x + Math.cos(angle) * this.radius
-          const endY = this.y + Math.sin(angle) * this.radius
+        for (let i = 0; i < 30; i++) {
+          const angle = ((Math.PI * 2) / 30) * i
 
           ctx.beginPath()
-          ctx.moveTo(this.x, this.y)
-          ctx.lineTo(endX, endY)
+          ctx.moveTo(
+            this.x,
+            this.y)
+          ctx.lineTo(
+            this.x + Math.cos(angle) * this.radius,
+            this.y + Math.sin(angle) * this.radius
+          )
           ctx.strokeStyle = this.color
           ctx.globalAlpha = this.alpha
           ctx.lineWidth = 2
           ctx.stroke()
         }
-
         ctx.globalAlpha = 1
       }
     }
